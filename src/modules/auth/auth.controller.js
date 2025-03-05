@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
+import { nanoid,customAlphabet } from 'nanoid';
 import userModel from "../../../DB/models/user.model.js";
 import { sendEmail } from "../../utils/sendEmail.js";
 
@@ -55,4 +56,38 @@ export const login = async (req,res,next)=>{
 
     const token = jwt.sign({id:user._id, userName:user.userName, role:user.role}, process.env.LOGIN_SIGNETURE);
     return res.status(200).json({message:"success", token});
+}
+
+export const sendCode = async (req,res,next)=>{
+    const {email} = req.body;
+    const code = customAlphabet('1234567890abcdefABCDEF', 4);
+    const user = await userModel.findOneAndUpdate({email}, {sendCode:code()});  
+    if(!user){
+        return res.status(404).json({message:"invalid email"});
+    }
+
+    const html = `
+    <h2>code is ${code()}</h2>
+    `;
+    await sendEmail(email, "code for resetPassword" ,html);
+    return res.status(200).json({message:"success"});
+}
+
+
+export const resetPassword = async (req,res,next)=>{
+    const {code,email,newPassword} = req.body;
+    const user = await userModel.findOne({email});
+    if(!user){
+        return res.status(404).json({message:"invalid email"});
+    }
+    if(code!= user.sendCode){
+        return res.status(400).json({message:"invalid code"});
+    }
+
+    const hashedPassword = bcrypt.hashSync(newPassword, parseInt(SALT_ROUND));
+
+    user.password = hashedPassword;
+    user.sendCode = null;
+    await user.save();
+    return res.status(200).json({message:"success"});
 }
