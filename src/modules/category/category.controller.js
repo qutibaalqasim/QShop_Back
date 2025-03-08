@@ -4,8 +4,13 @@ import categoryModel from '../../../DB/models/category.model.js';
 
 export const addCategory = async (req, res, next) => {
     const { name } = req.body;
-    const slug = slugify(name);
-    return res.json(slug);
+    req.body.slug = slugify(name);
+    req.body.createdBy = req.id;
+    req.body.updatedBy = req.id;
+
+    const category = await categoryModel.create(req.body);
+    
+    return res.status(201).json({message:"success", category});
 }
 
 export const getCategories = async (req, res, next) => {
