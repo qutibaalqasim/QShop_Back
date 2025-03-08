@@ -18,3 +18,8 @@ export const getCategories = async (req, res, next) => {
    const categories = await categoryModel.find({});
    return res.status(200).json({message:"success" , categories});
 }
+
+export const getActive = async (req, res, next) => {
+    const categories = await categoryModel.find({status: 'active'});
+    return res.status(200).json({message:"success" , categories});
+}
