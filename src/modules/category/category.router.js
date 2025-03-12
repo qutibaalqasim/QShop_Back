@@ -6,6 +6,7 @@ const router = Router();
 
 router.post('/', auth(['admin']), controller.addCategory);
 router.get('/',auth(['admin']), controller.getCategories);
+router.get('/:id', controller.getDetails);
 router.get('/activeCategories', controller.getActive);
 router.delete('/:id', auth(['admin']), controller.removeCategories);
 router.put('/:id', auth(['admin']), controller.updateCategory);

@@ -19,6 +19,16 @@ export const getCategories = async (req, res, next) => {
    return res.status(200).json({message:"success" , categories});
 }
 
+export const getDetails= async (req, res, next) => {
+    const {id} = req.params;
+    const category = await categoryModel.findById(id);
+    if(!category){
+        return res.status(404).json({message:"category not found"});
+    }
+
+    return res.status(200).json({message:"success", category});
+}
+
 export const getActive = async (req, res, next) => {
     const categories = await categoryModel.find({status: 'active'});
     return res.status(200).json({message:"success" , categories});
