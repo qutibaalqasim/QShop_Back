@@ -23,3 +23,20 @@ export const getActive = async (req, res, next) => {
     const categories = await categoryModel.find({status: 'active'});
     return res.status(200).json({message:"success" , categories});
 }
+
+export const removeCategories = async (req, res, next) => {
+    const {id} = req.params;
+    const category = await categoryModel.findByIdAndDelete(id);
+    if(!category){
+        return res.status(404).json({message:"category not found"});
+    }
+
+    return res.status(200).json({message:"deleted successfully"});
+
+   
+}
+
+
+export const updateCategory = async (req, res, next) => {
+    
+}
