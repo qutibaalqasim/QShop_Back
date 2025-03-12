@@ -1,0 +1,72 @@
+import {mongoose, model, Schema, Types } from "mongoose";
+
+const productSchema = new Schema({
+
+    name:{
+        type: String,
+        required: true, 
+        unique: true,
+        trim: true,
+        min: 3,
+        max: 60,
+    },
+    description:{
+        type: String,
+        required: true,
+    },
+    stock:{
+        type: Number,
+        default:1,
+    },
+    price:{
+        type: Number,
+        required: true,
+    },
+    discount:{
+        type: Number,
+        default: 0,
+    },
+    slug:{
+        type: String,
+        required: true,
+    },
+    mainImage:{
+        type: Object,
+    },
+    subImages:[
+        {
+            type: Object,
+            required: false,
+        }
+    ],
+    status:{
+        type: String,
+        default : "active",
+        enum: ["active", "inactive"],
+    },
+    createdBy:{
+        type: Types.ObjectId,
+        ref: "User",
+    },
+    updatedBy:{
+        type: Types.ObjectId,
+        ref: "User",
+    },
+    colors:[String],
+    sizes:[
+        {
+            type: [String],
+            enum:['sm', 'md' , 'lg' , 'xlg' , '2xlg' , '3xlg'],
+        }
+    ],
+    categoryId:{
+        type: Types.ObjectId,
+        ref: "Category",
+    }
+},{
+    timestamps: true,
+});
+
+
+const productModel = mongoose.models.Product || model('Product', productSchema);
+export default productModel;
