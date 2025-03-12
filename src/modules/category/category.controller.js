@@ -38,5 +38,21 @@ export const removeCategories = async (req, res, next) => {
 
 
 export const updateCategory = async (req, res, next) => {
-    
+    const {id} = req.params;
+    const {name} = req.body;
+    const userId = req.id;
+    const category = await categoryModel.findById(id);
+    if(!category){
+        return res.status(404).json({message:"category not found"});
+    }
+
+    category.name = name;
+    category.updatedBy = userId;
+    category.slug = slugify(name);
+    category.status = req.body.status;
+    await category.save();
+
+    return res.status(200).json({message:"updated successfully", category});
+
+
 }

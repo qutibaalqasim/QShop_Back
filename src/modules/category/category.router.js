@@ -8,5 +8,6 @@ router.post('/', auth(['admin']), controller.addCategory);
 router.get('/',auth(['admin']), controller.getCategories);
 router.get('/activeCategories', controller.getActive);
 router.delete('/:id', auth(['admin']), controller.removeCategories);
+router.put('/:id', auth(['admin']), controller.updateCategory);
 
 export default router;
