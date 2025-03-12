@@ -32,11 +32,11 @@ const productSchema = new Schema({
     },
     mainImage:{
         type: Object,
+        required: true,
     },
     subImages:[
         {
             type: Object,
-            required: false,
         }
     ],
     status:{
