@@ -33,3 +33,22 @@ export const createProduct = async (req, res, next) => {
     return res.status(201).json({message:"success" , product});
     
 }
+
+export const getProducts = async (req, res, next) => {
+    const products = await productModel.find({}).select('name mainImage price ');
+    return res.status(200).json({message:"success" , products});
+}
+
+export const getActive = async (req, res, next) => {
+    const products = await productModel.find({status: 'active'});
+    return res.status(200).json({message:"success" , products});
+}
+
+export const getDetails = async (req, res, next) => {
+    const {id} = req.params;
+    const product = await productModel.findById(id);
+    if(!product){
+        return res.status(404).json({message:"product not found"});
+    }
+    return res.status(200).json({message:"success" , product});
+}
