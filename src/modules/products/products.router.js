@@ -12,5 +12,6 @@ router.post('/' , auth(['admin']),fileUpload(fileValidation.image).fields([
 router.get('/',auth(['admin']), controller.getProducts);
 router.get('/active', controller.getActive);
 router.get('/:id', auth(['admin', 'user']), controller.getDetails);
+router.delete('/:id', auth(['admin']) , controller.removeProduct);
 
 export default router;

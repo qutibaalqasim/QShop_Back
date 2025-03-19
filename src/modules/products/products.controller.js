@@ -52,3 +52,14 @@ export const getDetails = async (req, res, next) => {
     }
     return res.status(200).json({message:"success" , product});
 }
+
+export const removeProduct = async (req,res,next)=>{
+    const {id} = req.params;
+    const product = await productModel.findByIdAndDelete(id);
+    if(!product){
+        return res.status(404).json({message:"product not found"});
+    }
+
+    await cloudinary.uploader.destroy(product.mainImage.public_id);
+    return res.status(200).json({message:"success"});
+}
