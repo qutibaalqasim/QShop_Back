@@ -61,5 +61,15 @@ export const removeProduct = async (req,res,next)=>{
     }
 
     await cloudinary.uploader.destroy(product.mainImage.public_id);
+    if(product.subImages){
+        for(const image of product.subImages){
+            await cloudinary.uploader.destroy(image.public_id);
+        }
+    }
+
+    const folderPath = product.mainImage.public_id.split('/').slice(0, -1).join('/');
+    if (folderPath) {
+        await cloudinary.api.delete_folder(folderPath);
+    }
     return res.status(200).json({message:"success"});
 }
