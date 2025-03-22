@@ -29,6 +29,21 @@ export const getCouponDetails= async (req, res, next) => {
     return res.status(200).json({message:"success", coupon});
 }
 
+export const getActiveCoupons = async (req, res, next) => {
+    const coupons = await couponModel.find({status: 'active'});
+    return res.status(200).json({message:"success", coupons});
+}
+
+export const removeCoupon = async (req, res, next) => {
+    const {id} = req.params;
+    const coupon = await couponModel.findByIdAndDelete(id);
+    if(!coupon){
+        return res.status(404).json({message:"coupon not found"});
+    }
+    return res.status(200).json({message:"deleted successfully"});
+}
+
+
 export const updateCoupon= async (req, res, next) => {
     const {id} = req.params;
     const {name} = req.body;
