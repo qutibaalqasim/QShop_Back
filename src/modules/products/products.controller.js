@@ -73,3 +73,19 @@ export const removeProduct = async (req,res,next)=>{
     }
     return res.status(200).json({message:"success"});
 }
+
+
+export const updateProduct = async (req, res, next) => {
+    const {id} = req.params;
+    const {name, categoryId} = req.body;
+    const checkCategory = await categoryModel.findById(categoryId);
+    if(!checkCategory){
+        return res.status(404).json({message:"category not found"});
+    }
+    req.body.slug = slugify(name);
+    const product = await productModel.findByIdAndUpdate(id, req.body, {new: true});
+    if(!product){
+        return res.status(404).json({message:"product not found"});
+    }
+    return res.status(200).json({message:"success", product});
+}

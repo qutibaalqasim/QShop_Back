@@ -13,5 +13,6 @@ router.get('/',auth(['admin']), controller.getProducts);
 router.get('/active', controller.getActive);
 router.get('/:id', auth(['admin', 'user']), controller.getDetails);
 router.delete('/:id', auth(['admin']) , controller.removeProduct);
+router.put('/:id', auth(['admin']) , controller.updateProduct);
 
 export default router;
