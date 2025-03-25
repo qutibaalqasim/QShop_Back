@@ -46,6 +46,14 @@ const orderSchema = new Schema({
      default:"cash",
      enum: ["cash", "card"],
    },
+   phoneNumber:{
+    type:String,
+    required: true,
+   },
+   address:{
+    type: String,
+    required: true,
+   },
    status:{
      type: String,
      default : "pending",
