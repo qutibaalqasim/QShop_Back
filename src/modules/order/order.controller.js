@@ -82,5 +82,9 @@ export const createOrder = async (req, res, next) => {
         });
     }
 
+    await cartModel.updateOne({userId:req.id},{
+        products:[],
+    });
+
     //return res.status(200).json({message:"success" , order});
 }
