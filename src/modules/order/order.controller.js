@@ -86,5 +86,23 @@ export const createOrder = async (req, res, next) => {
         products:[],
     });
 
-    return res.status(200).json({message:"success" , order});
+    return res.status(201).json({message:"success" , order});
+}
+
+
+export const getUserOrders = async (req,res,next) =>{
+    const orders = await orderModel.find({userId:req.id}).populate("products.productId");
+    if(!orders){
+        return res.status(404).json({message:"havn't any order yet!!"});
+    }
+    return res.status(200).json({message:"success" , orders});
+}
+
+export const getOrderByStatus = async (req,res,next) =>{
+     const {status} = req.params;
+    const orders = await orderModel.find({status});
+    if(!orders){
+        return res.status(404).json({message:"no order found with this status"});
+    }
+    return res.status(200).json({message:"success" , orders});
 }

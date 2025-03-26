@@ -5,7 +5,7 @@ import { auth } from "../../middleware/auth.js";
 const router = Router();
 
 router.post('/', auth(['user']), controller.createOrder);
-
-
+router.get('/', auth(['user']), controller.getUserOrders);
+router.get('/:status', auth(['admin']), controller.getOrderByStatus);
 
 export default router;
