@@ -54,16 +54,16 @@ export const createOrder = async (req, res, next) => {
     if(!req.body.phoneNumber){
         req.body.phoneNumber = user.phone;
     }
-   /*
+   
     const order = await orderModel.create({
         userId:req.id,
         products: finalProducts,
         couponName:couponName ?? '',
         address:req.body.address,
         phoneNumber: req.body.phoneNumber,
-        finalPrice: subTotal
+        finalPrice: subTotal - (subTotal * ((req.body.coupon.amount || 0))/100),
     });
-    */
+    
     //decrease product stock
     for(const product of cart.products){
        await productModel.updateOne({_id:product.productId},{
@@ -86,5 +86,5 @@ export const createOrder = async (req, res, next) => {
         products:[],
     });
 
-    //return res.status(200).json({message:"success" , order});
+    return res.status(200).json({message:"success" , order});
 }
