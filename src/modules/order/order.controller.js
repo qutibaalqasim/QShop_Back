@@ -106,3 +106,16 @@ export const getOrderByStatus = async (req,res,next) =>{
     }
     return res.status(200).json({message:"success" , orders});
 }
+
+export const changeStatus = async (req,res,next) =>{
+    const {orderId} = req.params;
+    const order = await orderModel.findById(orderId);
+    if(!order){
+        return res.status(404).json({message:"order not found"});
+    }
+   
+    order.status = req.body.status;
+    order.updatedBy = req.id;
+    await order.save();
+    return res.status(200).json({message:"success", order});
+}
