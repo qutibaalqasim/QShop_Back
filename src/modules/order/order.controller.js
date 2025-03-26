@@ -24,6 +24,8 @@ export const createOrder = async (req, res, next) => {
         if(coupon.usedBy.includes(req.id)){
             return res.status(400).json({message:"coupon already used"});
         }
+
+        req.body.coupon = coupon;
     }
 
     const finalProducts = [];
@@ -71,7 +73,14 @@ export const createOrder = async (req, res, next) => {
        });
     }
 
-    
+    // update coupon usedBy
+    if(req.body.coupon){
+        await couponModel.updateOne({_id:req.body.coupon._id},{
+            $addToSet:{
+                usedBy:req.id
+            }
+        });
+    }
 
     //return res.status(200).json({message:"success" , order});
 }
