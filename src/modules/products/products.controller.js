@@ -55,7 +55,7 @@ export const getActive = async (req, res, next) => {
 
 export const getDetails = async (req, res, next) => {
     const {id} = req.params;
-    const product = await productModel.findById(id);
+    const product = await productModel.findById(id).populate('reviews');
     if(!product){
         return res.status(404).json({message:"product not found"});
     }
