@@ -12,12 +12,6 @@ const reviewSchema = new Schema({
         min: 1,
         max: 5,
     },
-    usedBy:[
-        {
-            type: Types.ObjectId,
-            ref: "User",
-        }
-    ],
     createdBy:{
         type: Types.ObjectId,
         ref: "User",
