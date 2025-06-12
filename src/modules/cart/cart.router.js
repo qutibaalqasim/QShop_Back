@@ -8,6 +8,7 @@ router.post('/', auth(['user']), controller.addToCart);
 router.get('/', auth(['user']), controller.getCart);
 router.delete('/', auth(['user']), controller.deleteFromCart);
 router.delete('/clear', auth(['user']), controller.clearCart);
+router.put('/', auth(['user']), controller.updateCart);
 
 
 export default router;
