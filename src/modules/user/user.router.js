@@ -6,6 +6,7 @@ import { auth } from "../../middleware/auth.js";
 const router = Router();
 
 router.get("/", auth(['admin']), controller.getUsers);
+router.get("/:id", auth(['admin']), controller.getUser);
 
 
 
