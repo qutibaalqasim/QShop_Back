@@ -6,6 +6,7 @@ import productsRouter from './modules/products/products.router.js';
 import couponRouter from './modules/coupon/coupon.router.js';
 import cartRouter from './modules/cart/cart.router.js';
 import orderRouter from './modules/order/order.router.js';
+import userRouter from './modules/user/user.router.js';
 const initApp = async (app,express)=>{
     app.use(express.json());
     app.use(cors());
@@ -21,6 +22,7 @@ const initApp = async (app,express)=>{
     app.use('/coupons', couponRouter);
     app.use('/carts', cartRouter);
     app.use('/orders' , orderRouter);
+    app.use('/users', userRouter);
     
     
     app.get('*' , (req,res)=>{
