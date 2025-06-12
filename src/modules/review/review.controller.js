@@ -28,3 +28,21 @@ export const createReview = async (req, res, next) => {
     }
     return res.status(201).json({ message: "Review created successfully", review });
 }
+
+export const updateReview = async (req, res, next) => {
+    const userId = req.id;
+    const {reviewId} = req.params;
+    const {comment, rating} = req.body;
+
+    const review = await reviewModel.findOneAndUpdate(
+        { _id: reviewId, createdBy: userId },
+        { comment, rating },
+        { new: true }
+    );
+
+    if (!review) {
+        return res.status(404).json({ message: "Review not found or you are not authorized to update it" });
+    }
+
+    return res.status(200).json({ message: "Review updated successfully", review });
+}
