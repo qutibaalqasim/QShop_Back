@@ -5,6 +5,7 @@ import * as controller from './cart.controller.js';
 const router = Router();
 
 router.post('/', auth(['user']), controller.addToCart);
+router.get('/', auth(['user']), controller.getCart);
 
 
 export default router;

@@ -25,3 +25,11 @@ export const addToCart = async (req, res, next) => {
 
     return res.status(201).json({message:"succss", cart});
 }
+
+export const getCart = async (req, res, next) => {
+    const cart = await cartModel.findOne({userId:req.id}).populate("products.productId", "name price mainImage");
+    if(!cart){
+        return res.status(404).json({message:"cart not found"});
+    }
+    return res.status(200).json({message:"success", cart});
+}
