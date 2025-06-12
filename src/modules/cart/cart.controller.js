@@ -48,3 +48,11 @@ export const deleteFromCart = async (req,res,next) =>{
     await cart.save();
     return res.status(200).json({message:"success", cart});
 }
+
+export const clearCart = async (req, res, next) => {
+    const cart = await cartModel.findOneAndDelete({userId:req.id});
+    if(!cart){
+        return res.status(404).json({message:"cart not found"});
+    }
+    return res.status(200).json({message:"success", cart});
+}

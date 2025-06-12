@@ -7,6 +7,7 @@ const router = Router();
 router.post('/', auth(['user']), controller.addToCart);
 router.get('/', auth(['user']), controller.getCart);
 router.delete('/', auth(['user']), controller.deleteFromCart);
+router.delete('/clear', auth(['user']), controller.clearCart);
 
 
 export default router;
