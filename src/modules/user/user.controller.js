@@ -30,3 +30,15 @@ export const updateUser = async (req, res, next) => {
       }
       return res.status(200).json({ message: "User updated successfully", user });
 }
+
+export const deleteUser = async (req, res, next) => {
+    const { id } = req.params;
+    if(id != req.id && req.role != 'admin'){
+        return res.status(403).json({ message: "You are not authorized to delete this user" });
+    }
+    const user = await userModel.findByIdAndDelete(id);
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json({ message: "User deleted successfully" });
+}

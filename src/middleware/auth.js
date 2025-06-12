@@ -18,6 +18,7 @@ export const auth = (accessRoles = [])=>{
             return res.status(400).json({message:"you are not authorized"});   
         }
         req.id = decoded.id;
+        req.role = decoded.role;
         next();
     }
 }
