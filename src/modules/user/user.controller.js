@@ -18,3 +18,15 @@ export const getUser = async (req, res, next) => {
     }
     return res.status(200).json({ message: "User retrieved successfully", user });
 }
+
+export const updateUser = async (req, res, next) => {
+      const { id } = req.params;
+      if(id != req.id){
+        return res.status(403).json({ message: "You are not authorized to update this user" });
+      }
+      const user = await userModel.findByIdAndUpdate(id, req.body, { new: true });
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(200).json({ message: "User updated successfully", user });
+}

@@ -7,6 +7,8 @@ const router = Router();
 
 router.get("/", auth(['admin']), controller.getUsers);
 router.get("/:id", auth(['admin']), controller.getUser);
+router.put("/:id", auth(['admin', 'user']), controller.updateUser);
+
 
 
 
