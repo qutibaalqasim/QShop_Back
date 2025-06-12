@@ -33,3 +33,18 @@ export const getCart = async (req, res, next) => {
     }
     return res.status(200).json({message:"success", cart});
 }
+
+export const deleteFromCart = async (req,res,next) =>{
+    const {productId} = req.body;
+    const cart = await cartModel.findOne({userId:req.id});
+    if(!cart){
+        return res.status(404).json({message:"cart not found"});
+    }
+    const productIndex = cart.products.findIndex(item => item.productId.toString() == productId);
+    if(productIndex == -1){
+        return res.status(404).json({message:"product not found in cart"});
+    }
+    cart.products.splice(productIndex, 1);
+    await cart.save();
+    return res.status(200).json({message:"success", cart});
+}
